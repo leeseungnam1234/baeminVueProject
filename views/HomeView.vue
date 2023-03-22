@@ -48,6 +48,21 @@
         </div>
       </div>
     </div>
+    <!-- 슬라이드 -->
+    <div>
+      <div class="slider-container">
+        <div class="slider">
+          <div class="slides" :style="`transform:translateX(-${currentSlideIndex * slideWidth}px)`">
+            <div v-for="(slide, index) in slides" :key="index" class="slide">
+              {{ slide }}
+            </div>
+          </div>
+        </div>
+        <button @click="prevSlide">Previous</button>
+        <button @click="nextSlide">Next</button>
+      </div>
+    </div>
+    <!-- 슬라이드 -->
     <!-- body -->
   </div>
 </template>
@@ -60,6 +75,7 @@ export default {
     return {
       query: '',
       results: [],
+      // 장사캘린더~ 배민비즈니스
       navigationItems: [
         { text: '장사캘린더', link: '/calendar', newDot: true },
         { text: '장사노하우', link: '/knowhow?page=1', tooltip: null },
@@ -81,11 +97,19 @@ export default {
             { text: '이용가이드', link: '/guide', icon: 'guidebook' }
           ]
         },
-        { text: '식재료·비품', link: '/mart', tooltip: null }
-      ]
+        { text: '식재료·비품 |', link: '/mart', tooltip: null },
+        { text: '배민비즈니스', link: '/business', tooltip: null }
+      ],
+      // 장사캘린더~ 배민비즈니스
+      // 슬라이드
+      currentSlideIndex: 0,
+      slides: ['Slide 1', 'Slide 2', 'Slide 3', 'Slide 4'],
+      slideWidth: 500
+      // 슬라이드
     }
   },
   methods: {
+    // 검색 서버연결
     async search () {
       try {
         const response = await axios.get('https://baeminvue.netlify.app/', {
@@ -97,6 +121,14 @@ export default {
       } catch (error) {
         console.error(error)
       }
+    },
+    nextSlide () {
+      this.currentSlideIndex =
+        (this.currentSlideIndex + 1) % this.slides.length
+    },
+    prevSlide () {
+      this.currentSlideIndex =
+        (this.currentSlideIndex - 1 + this.slides.length) % this.slides.length
     }
   }
 }
@@ -301,6 +333,10 @@ input[type="text"]:focus {
   top: calc(100% + 8px);
   display: block;
 }
+
+li a[href='/business'] {
+  color: #00f3ee;
+}
 /* 장사캘린더~ 식재료 비품 */
 /* 로그인 */
 .Member__LoginBox {
@@ -350,4 +386,69 @@ input[type="text"]:focus {
   text-decoration: underline;
 }
 /* 로그인 */
+/* 슬라이드 */
+.slider-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slider {
+  width: 100%;
+  max-width: 800px;
+  height: 200px;
+  margin-top: 30px;
+  position: relative;
+}
+
+.slides {
+  display: flex;
+  height: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  color: #6c0bdb;
+}
+
+.slide:nth-child(odd) {
+  background-color: #219c0e;
+}
+
+.slide:nth-child(even) {
+  background-color: #0dd127;
+}
+
+.slide::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-color: #1b4f55;
+  transform: skewX(-30deg);
+}
+
+.slide:first-child::before {
+  background-color: #bd1818;
+}
+
+.slide:last-child::before {
+  background-color: #ade5a0;
+}
+
+.slide-text {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+}
+/* 슬라이드 */
 </style>
