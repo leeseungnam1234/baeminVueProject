@@ -59,6 +59,7 @@
           </div>
         </div>
         <button @click="prevSlide">Previous</button>
+        <h3>현재 슬라이드 제작중 입니다.</h3>
         <button @click="nextSlide">Next</button>
       </div>
     </div>
@@ -123,7 +124,7 @@ export default {
       }
       // 검색 서버연결
     },
-    // 슬라이드 
+    // 슬라이드
     nextSlide () {
       this.currentSlideIndex =
         (this.currentSlideIndex + 1) % this.slides.length
@@ -132,7 +133,7 @@ export default {
       this.currentSlideIndex =
         (this.currentSlideIndex - 1 + this.slides.length) % this.slides.length
     }
-    // 슬라이드 
+    // 슬라이드
   }
 }
 </script>
