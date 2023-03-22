@@ -121,7 +121,9 @@ export default {
       } catch (error) {
         console.error(error)
       }
+      // 검색 서버연결
     },
+    // 슬라이드 
     nextSlide () {
       this.currentSlideIndex =
         (this.currentSlideIndex + 1) % this.slides.length
@@ -130,6 +132,7 @@ export default {
       this.currentSlideIndex =
         (this.currentSlideIndex - 1 + this.slides.length) % this.slides.length
     }
+    // 슬라이드 
   }
 }
 </script>
